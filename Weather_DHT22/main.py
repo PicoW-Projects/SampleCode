@@ -95,9 +95,12 @@ print('Listening on', addr)
 # Initialize DHT22
 dht22 = PicoDHT22(Pin(2,Pin.IN,Pin.PULL_UP))
 
+statusled = Pin(11, Pin.OUT)
+
 def readTH():
     Tsum = 0
     Hsum = 0
+    statusled.on()
     for i in range(3):
         T, H = dht22.read()
         time.sleep(.2)
@@ -106,7 +109,7 @@ def readTH():
     
     avgT = (Tsum / 3)
     avgH = (Hsum / 3)
-    
+    statusled.off()
     return round(avgT, 1), round(avgH, 1)
 
 # Listen for connections
